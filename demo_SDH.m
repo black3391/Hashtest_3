@@ -59,8 +59,9 @@ nbits = 64;
 
 % Init Z
 randn('seed',3);
-%Zinit=sign(randn(Ntrain,nbits));
-
+Zinit=sign(randn(Ntrain,nbits));
+Zinit=schmidt(Zinit');
+Zinit=Zinit';
 
 debug = 0;
 [~, F, H] = SDH(PhiX,label,Zinit,gmap,Fmap,[],maxItr,debug);
