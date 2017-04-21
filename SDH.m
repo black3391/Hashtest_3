@@ -31,19 +31,23 @@ switch gmap.loss
         model = train(double(y),sparse(B),svm_option);
         Wg = model.w';
 end
-Wgs=schmidt(Wg');
-G.W = Wgs';
+% Wgs=schmidt(Wg');
+% G.W = Wgs';
+G.W = Wg;
 
 % F-step
 
 [WF, ~, ~] = RRC(X, B, Fmap.lambda);
-WFs=schmidt(WF');
-F.W = WFs; F.nu = nu;
+% WFs=schmidt(WF');
+% F.W = WFs;
+F.W = WF;
+F.nu = nu;
 
 
 i = 0; 
 Wg1=[];
 WF1=[];
+B1=[];
 while i < maxItr    
     i=i+1;  
     
@@ -64,11 +68,14 @@ while i < maxItr
                     Wkk = Wg(k,:); Wk = Wg; Wk(k,:) = [];                    
                     B(:,k) = sign(Q(:,k) -  Zk*Wk*Wkk');
                 end
-                
+
                 if norm(B-Z0,'fro') < 1e-6 * norm(Z0,'fro')
                     break
                 end
             end
+%             Bs=schmidt(B');
+%             B1=B;
+%             B = Bs';
         case 'Hinge' 
             
             for ix_z = 1 : size(B,1)
@@ -90,19 +97,19 @@ while i < maxItr
         model = train(double(y),sparse(B),svm_option);
         Wg = model.w';
     end
-   Wg1 =Wg;
-    Wgs=schmidt(Wg');
-    G.W = Wgs';
-    %G.W = Wg;
+%     Wg1 =Wg;
+%     Wgs=schmidt(Wg');
+%     G.W = Wgs';
+    G.W = Wg;
     
     % F-step 
     WF0 = WF;
     
     [WF, ~, ~] = RRC(X, B, Fmap.lambda);
-    WF1=WF;
-    WFs=schmidt(WF');
-    F.W = WFs';
-    %F.W = WF; 
+%     WF1=WF;
+%     WFs=schmidt(WF');
+%     F.W = WFs';
+    F.W = WF; 
     F.nu = nu;
     
     
@@ -123,5 +130,6 @@ while i < maxItr
     
     
 end
-G.W=Wg1;
-F.W=WF1;
+% G.W=Wg1;
+% F.W=WF1;
+% B=B1;
