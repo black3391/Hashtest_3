@@ -39,17 +39,14 @@ G.W = Wg;
 
 F.W = WF; F.nu = nu;
 
-
-i = 0; 
+i = 0;
 while i < maxItr    
     i=i+1;  
     
     if debug,fprintf('Iteration  %03d: ',i);end
     
     % B-step
-  
-        XF = X*WF;
-   
+    XF = X*WF;
     switch gmap.loss
         case 'L2'
             Q = nu*XF + Y*Wg';
@@ -59,6 +56,7 @@ while i < maxItr
                Z0 = B;
                 for k = 1 : size(B,2)
                     Zk = B; Zk(:,k) = [];
+                    b_k=B(:,k);
                     Wkk = Wg(k,:); Wk = Wg; Wk(k,:) = [];                    
                     B(:,k) = sign(Q(:,k) -  Zk*Wk*Wkk');
                 end
@@ -73,7 +71,9 @@ while i < maxItr
                 w_ix_z = bsxfun(@minus, Wg(:,y(ix_z)), Wg);
                 B(ix_z,:) = sign(2*nu*XF(ix_z,:) + delta*sum(w_ix_z,2)');
             end
-             
+                       Q = nu*XF + Y*Wg';
+            
+
     end
 
     

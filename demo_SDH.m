@@ -9,7 +9,7 @@ dataset = 'cifar_10_gist';
 
 % prepare_dataset(dataset);
 
-load(['./testbed/',dataset]);
+load(['C:\Users\qishuhan\Documents\GitHub\SHDH_1\testbed\',dataset]);
 traindata = double(traindata);
 testdata = double(testdata);
 
@@ -55,7 +55,7 @@ Fmap.lambda = 1e-2;
 
 
 %% run algo
-nbits = 64;
+nbits = 32;
 
 % Init Z
 randn('seed',3);
