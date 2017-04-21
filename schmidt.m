@@ -2,17 +2,17 @@ function B= schmidt(A)
 
 % input:A=[a1,a2,...ap]
 
-% output:经过正交化处理的矩阵B
+
 
 [n,p]=size(A);
 
 B=zeros(n,p);
 
-%根据正交化的计算公式
+
 
 for i=1:n
 
-    B(:,i)=A(:,i);  %bi的初始值
+    B(:,i)=A(:,i);  
 
     for j=1:i-1
 
@@ -20,7 +20,6 @@ for i=1:n
 
     end
 
-    %单位化
 
     B(:,i)=B(:,i)/norm(B(:,i));
 

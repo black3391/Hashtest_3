@@ -55,15 +55,23 @@ Fmap.lambda = 1e-2;
 
 
 %% run algo
-nbits = 32;
+nbitsarray=[32,48,64,96,128];
+%nbitsarray=[32,48];
+resultarray=[];
+for nl= 1:size(nbitsarray,2)
+  nbits= nbitsarray(nl)
+  result = [];
+  result = [result nbits];
+%nbits = 64;
 
 % Init Z
 randn('seed',3);
 Zinit=sign(randn(Ntrain,nbits));
-Zinit=schmidt(Zinit');
-Zinit=Zinit';
+ Zinit=schmidt(Zinit');
+ Zinit=Zinit';
+%Zinit=sign(Zinit);
 
-debug = 0;
+debug = 1;
 [~, F, H] = SDH(PhiX,label,Zinit,gmap,Fmap,[],maxItr,debug);
 
 
@@ -98,6 +106,10 @@ Ret = (hammTrainTest <= hammRadius+0.00001);
 % hamming ranking: MAP
 [~, HammingRank]=sort(hammTrainTest,1);
 MAP = cat_apcal(traingnd,testgnd,HammingRank)
+result = [result Pre Rec MAP];
+resultarray=[resultarray;result];
+end
+a=1;
 
 
 

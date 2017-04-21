@@ -31,22 +31,26 @@ switch gmap.loss
         model = train(double(y),sparse(B),svm_option);
         Wg = model.w';
 end
-G.W = Wg;
+Wgs=schmidt(Wg');
+G.W = Wgs';
 
 % F-step
 
 [WF, ~, ~] = RRC(X, B, Fmap.lambda);
+WFs=schmidt(WF');
+F.W = WFs; F.nu = nu;
 
-F.W = WF; F.nu = nu;
 
-i = 0;
+i = 0; 
+Wg1=[];
+WF1=[];
 while i < maxItr    
     i=i+1;  
     
     if debug,fprintf('Iteration  %03d: ',i);end
     
     % B-step
-    XF = X*WF;
+        XF = X*WF;
     switch gmap.loss
         case 'L2'
             Q = nu*XF + Y*Wg';
@@ -81,18 +85,25 @@ while i < maxItr
     switch gmap.loss
     case 'L2'
         [Wg, ~, ~] = RRC(B, Y, gmap.lambda); % (Z'*Z + gmap.lambda*eye(nbits))\Z'*Y;
+        
     case 'Hinge'        
         model = train(double(y),sparse(B),svm_option);
         Wg = model.w';
     end
-    G.W = Wg;
+   Wg1 =Wg;
+    Wgs=schmidt(Wg');
+    G.W = Wgs';
+    %G.W = Wg;
     
     % F-step 
     WF0 = WF;
     
     [WF, ~, ~] = RRC(X, B, Fmap.lambda);
-   
-    F.W = WF; F.nu = nu;
+    WF1=WF;
+    WFs=schmidt(WF');
+    F.W = WFs';
+    %F.W = WF; 
+    F.nu = nu;
     
     
     
@@ -112,3 +123,5 @@ while i < maxItr
     
     
 end
+G.W=Wg1;
+F.W=WF1;
