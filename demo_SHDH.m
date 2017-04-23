@@ -9,7 +9,7 @@ dataset = 'cifar_10_gist';
 
 % prepare_dataset(dataset);
 
-load(['./testbed/',dataset]);
+load(['C:\Users\qishuhan\Documents\GitHub\SHDH_1\testbed\',dataset]);
 traindata = double(traindata);
 testdata = double(testdata);
 
@@ -23,6 +23,7 @@ end
 Ntrain = size(traindata,1);
 % Use all the training data
 X = traindata;
+
 label = double(traingnd);
 % get anchors
 n_anchors = 1000;
@@ -36,6 +37,8 @@ anchor = X(randsample(Ntrain, n_anchors),:);
 % sigma = mean(min(Dis,[],2).^0.5);
 % clear Dis
 sigma = 0.4; % for normalized data
+Train_temp= X(randsample(Ntrain, 5000),:);
+[A] = HyGh( Train_temp,sigma, 6 );
 PhiX = exp(-sqdist(X,anchor)/(2*sigma*sigma));
 PhiX = [PhiX, ones(Ntrain,1)];
 

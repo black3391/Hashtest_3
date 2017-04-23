@@ -9,7 +9,7 @@ dataset = 'cifar_10_gist';
 
 % prepare_dataset(dataset);
 
-load(['./testbed/',dataset]);
+load(['C:\Users\qishuhan\Documents\GitHub\SHDH_1\testbed\',dataset]);
 traindata = double(traindata);
 testdata = double(testdata);
 
@@ -61,7 +61,7 @@ for nl= 1:size(nbitsarray,2)
   nbits= nbitsarray(nl)
   result = [];
   result = [result nbits];
-%nbits = 64;
+nbits = 64;
 
 % Init Z
 randn('seed',3);
