@@ -9,7 +9,7 @@ dataset = 'cifar_10_gist';
 
 % prepare_dataset(dataset);
 
-load(['C:\Users\qishuhan\Documents\GitHub\SHDH_1\testbed\',dataset]);
+load(['E:\bakubuntu\SHDH_3\testbed\',dataset]);
 traindata = double(traindata);
 testdata = double(testdata);
 
@@ -55,17 +55,17 @@ Fmap.lambda = 1e-2;
 
 %% run algo
 nbitsarray=[32,48,64,96,128];
-%nbitsarray=[32,48];
+%nbitsarray=[64];
 resultarray=[];
 for nl= 1:size(nbitsarray,2)
   nbits= nbitsarray(nl)
   result = [];
   result = [result nbits];
-nbits = 64;
+%nbits = 64;
 
 % Init Z
 randn('seed',3);
-%Zinit=sign(randn(Ntrain,nbits));
+Zinit=sign(randn(Ntrain,nbits));
 %  Zinit=schmidt(Zinit');
 %  Zinit=Zinit';
 %Zinit=sign(Zinit);

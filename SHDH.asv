@@ -118,7 +118,7 @@ while i < maxItr
     
     
     
-    bias = norm(B-X*WF,'fro');
+    bias = nu*norm(B-X*WF,'fro');
     I=eye(size(H,1));
     L=I-H;
     bias2 = beta*trace(B'*L*B);
@@ -126,14 +126,14 @@ while i < maxItr
     if debug, fprintf('bias3 = %g, bias1=%g, bias2=%g\n',bias3,bias,bias2); 
     end
     
-%     if bias < tol*norm(B,'fro')
-%             break;
-%     end 
-%     
-%     
-%     if norm(WF-WF0,'fro') < tol * norm(WF0)
-%         break;nil
-%     end
+    if bias < tol*norm(B,'fro')
+            break;
+    end 
+    
+    
+    if norm(WF-WF0,'fro') < tol * norm(WF0)
+        break;nil
+    end
     
     
 end

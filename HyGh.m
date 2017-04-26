@@ -13,13 +13,13 @@ dist= exp(-sqdist(X)/(2*sigma*sigma));
 for i = 1:size(dist,2)
 t = dist(:,i);
 [pos1,pos2]=sort(t,'descend');
-t = pos2(2:k);
-H(t,i)=1;
+t = pos2(1:k);
+H(t,i)=pos1(1:k);
 end
 Dvm = diag(sum(H,2));
 Dem = diag(sum(H,1));
 Dwm = eye(size(dist,2));
-A=Dvm^(-1/2)*H*Dwm*Dem^(-1)*H'*Dvm^(-1/2);
+A=diag(diag(Dvm.^(-0.5)))*H*Dwm*Dem^(-1)*H'*diag(diag(Dvm.^(-1/2)));
 
 end
 

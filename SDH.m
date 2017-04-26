@@ -115,18 +115,18 @@ while i < maxItr
     
     
     
-    bias = norm(B-X*WF,'fro');
-    
-    if debug, fprintf('  bias=%g\n',bias); end
-    
-    if bias < tol*norm(B,'fro')
-            break;
-    end 
-    
-    
-    if norm(WF-WF0,'fro') < tol * norm(WF0)
-        break;
+    bias = nu*norm(B-X*WF,'fro');
+    bias3 = norm(Y-B*Wg,'fro');
+    if debug, fprintf('bias3 = %g, bias1=%g\n',bias3,bias); 
     end
+%     if bias < tol*norm(B,'fro')
+%             break;
+%     end 
+    
+    
+%     if norm(WF-WF0,'fro') < tol * norm(WF0)
+%         break;
+%     end
     
     
 end
