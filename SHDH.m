@@ -41,6 +41,7 @@ F.W = WF; F.nu = nu;
 beta = Hmap.beta;
 H=Hmap.graph;
 i = 0;
+
 % maxItrb=5;
 % OrigB=[];
 while i < maxItr    

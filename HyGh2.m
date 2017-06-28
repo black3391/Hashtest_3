@@ -1,4 +1,4 @@
-function [A] = HyGh( X, sigma,k )
+function [M] = HyGh2( X, sigma,k )
 %HYGH Summary of this function goes here
 %   Detailed explanation goes here
 % H= [0 1 0 0 0 1;
@@ -13,14 +13,22 @@ dist= exp(-sqdist(X)/(2*sigma*sigma));
 for i = 1:size(dist,2)
 t = dist(:,i);
 [pos1,pos2]=sort(t,'descend');
-t = pos2(1:k);
-H(t,i)=pos1(1:k);
+t = pos2(2:k);
+% H(i,t)=1;
+% H(t,i)=1;
+ H(i,t)=pos1(2:k);
 end
-Dvm = diag(sum(H,2));
-Dem = diag(sum(H,1));
-Dwm = eye(size(dist,2));
-%H=H-eye(size(H,1));
-A=diag(diag(Dvm.^(-0.5)))*H*Dwm*Dem^(-1)*H'*diag(diag(Dvm.^(-1/2)));
+H_temp=[];
+for i =1:size(dist,1)
+    k = H(:,i);
+    if ~sum(k)==0
+        H_temp=[H_temp k];
+    end
+end
+H=H_temp';
+% A = Hyper(H);
+W=ones(size(H,1),1);
+M=get_Zhou_Laplacian(H, W);
 
 end
 

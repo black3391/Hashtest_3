@@ -38,11 +38,11 @@ anchor = traindata(randsample(Ntrain, n_anchors),:);
 % sigma = mean(min(Dis,[],2).^0.5);
 % clear Dis
 sigma = 0.4; % for normalized data
-sample = randsample(Ntrain, 10000);
+sample = randsample(Ntrain, 3000);
 Train_label = label(sample,:);
 Train_sample= traindata(sample,:);
-[A] = HyGh( Train_sample,sigma, 30 );
-
+[A] = HyGh2( Train_sample,sigma, 10 );
+%A=[];
 % PhiX = exp(-sqdist(traindata,anchor)/(2*sigma*sigma));
 % PhiX = [PhiX, ones(Ntrain,1)];
 
@@ -55,7 +55,8 @@ Phi_trainsample = [Phi_trainsample, ones(size(Phi_trainsample,1),1)];
 
 
 % learn G and F
-betaarray=[0,0.0000005,0.000001,0.000005,0.00001,0.00005,0.0001,0.0005,0.001,0.005,0.000001];
+betaarray=[0,0.0000005,0.000001,0.000005,0.00001,0.00005,0.0001,0.0005,0.001,0.005,0.01];
+betaarray=[0,0.0000005,0.000001,0.000005,0.00001,0.00005,0.0001,0.0005,0.001,0.005,0.01];
 maxItr = 5;
 gmap.lambda = 1; gmap.loss = 'L2';
 Fmap.type = 'RBF';
