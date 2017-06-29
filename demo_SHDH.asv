@@ -41,23 +41,25 @@ sigma = 0.4; % for normalized data
 sample = randsample(Ntrain, 3000);
 Train_label = label(sample,:);
 Train_sample= traindata(sample,:);
-[A] = HyGh2( Train_sample,sigma, 10 );
+[A] = HyGh2( Train_sample,sigma, 7 );
 %A=[];
 % PhiX = exp(-sqdist(traindata,anchor)/(2*sigma*sigma));
 % PhiX = [PhiX, ones(Ntrain,1)];
 
-Phi_testdata = exp(-sqdist(testdata,anchor)/(2*sigma*sigma)); clear testdata
+Phi_testdata = exp(-sqdist(testdata,anchor)/(2*sigma*sigma)); 
+%clear testdata
 Phi_testdata = [Phi_testdata, ones(size(Phi_testdata,1),1)];
-Phi_traindata = exp(-sqdist(traindata,anchor)/(2*sigma*sigma)); clear traindata;
+Phi_traindata = exp(-sqdist(traindata,anchor)/(2*sigma*sigma)); 
+%clear traindata;
 Phi_traindata = [Phi_traindata, ones(size(Phi_traindata,1),1)];
 Phi_trainsample = exp(-sqdist(Train_sample,anchor)/(2*sigma*sigma));
 Phi_trainsample = [Phi_trainsample, ones(size(Phi_trainsample,1),1)];
 
 
 % learn G and F
-betaarray=[0,0.0000005,0.000001,0.000005,0.00001,0.00005,0.0001,0.0005,0.001,0.005,0.01];
-betaarray=[0,0.0000005,0.000001,0.000005,0.00001,0.00005,0.0001,0.0005,0.001,0.005,0.01];
-maxItr = 5;
+%betaarray=[0,0.0000005,0.000001,0.000005,0.00001,0.00005,0.0001,0.0005,0.001,0.005,0.01];
+betaarray=[0,0.000005,0.00001,0.00005,0.0001,0.0005];
+maxItr = 7;
 gmap.lambda = 1; gmap.loss = 'L2';
 Fmap.type = 'RBF';
 Fmap.nu = 0; %  penalty parm for F term
@@ -101,7 +103,7 @@ AsymDist = 0; % Use asymmetric hashing or not
 
 if AsymDist 
     H = H > 0; % directly use the learned bits for training data
-else
+    elsel
     H = Phi_traindata*F.W > 0;
 end
 
